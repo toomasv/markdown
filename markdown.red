@@ -301,7 +301,7 @@ scanner: context [
 	]
 	;;; RULES
 	rule: [s: rule-start (elem: out) opt preliminary baseline]
-	preliminary: [s: (probe elem/element)
+	preliminary: [s: (elem/element)
 		(if debug [print ["(prelim start) Line:" to-line-end s]])
 		[ahead normalized-indent | none]				; change tabs in the beginning of line into spaces
 		(if debug [print [
@@ -433,7 +433,7 @@ scanner: context [
 						if debug [print ["Close latest/parent" latest/parent/element]]
 						latest/close
 					]
-					para [probe latest/parent/element
+					para [latest/parent/element
 						either latest/parent/element = 'li [
 							if debug [print ["Close latest/parent/parent" latest/parent/parent/element]]
 							latest/parent/parent/close
@@ -499,7 +499,7 @@ scanner: context [
 		clear text ;probe reduce [e head e tail? e]
 		if tail? e [
 			out/close 
-			if debug [probe "(line) End of input, close all."]
+			if debug [print "(line) End of input, close all."]
 		]										; If we are in the end of input close all
 	)]
 
@@ -868,10 +868,10 @@ html: context [
 		emit rejoin [{<a href="#example-} example-num {">Example } example-num {</a>}]
 		emit </div>
 		emit <div class="column">
-		emit-code/class format-space copy probe example/1 "language-markdown"
+		emit-code/class format-space copy example/1 "language-markdown"
 		emit </div>
 		emit <div class="column">
-		emit-code/class c1: escape-html/only probe example/2 "language-html"
+		emit-code/class c1: escape-html/only example/2 "language-html"
 		emit </div>
 		code: escape-html/only html2/gen-html/no-template/no-toc scanner2/scan-doc example/1
 		;unless newline = last code [append code newline]
@@ -893,14 +893,14 @@ scanner2: make scanner []
 html2: make object! load mold body-of html
 text-file: either file? file: system/script/args [
 	system/script/args: none
-	file: append %spec/ file
+	file: file
 	either "red" = find/last/tail file dot [
 		do file
 	][ 
 		read file
 	]
 ][
-	read %spec-tmp.txt ;https://github.github.com/gfm/spec.txt ;https://spec.commonmark.org/0.28/spec.txt
+	read %spec-tmp.txt;https://github.github.com/gfm/spec.txt ;https://spec.commonmark.org/0.28/spec.txt
 ]
 doc: html/gen-html scanner/scan-doc text-file
 write %out.html doc
