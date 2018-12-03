@@ -900,7 +900,7 @@ text-file: either file? file: system/script/args [
 		read file
 	]
 ][
-	read %spec-tmp.txt;https://github.github.com/gfm/spec.txt ;https://spec.commonmark.org/0.28/spec.txt
+	read %spec-tmp.txt ;https://github.github.com/gfm/spec.txt ;https://spec.commonmark.org/0.28/spec.txt
 ]
 doc: html/gen-html scanner/scan-doc text-file
 write %out.html doc
