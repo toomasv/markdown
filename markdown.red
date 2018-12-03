@@ -3,7 +3,7 @@ title: "Markdown by Red"
 scanner: context [
 
 	;;; Words
-	debug: true
+	debug: false
 	new: func [elem][make elem! [element: elem]]
 	elem!: object [
 		parent: none 
