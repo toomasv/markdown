@@ -891,7 +891,7 @@ html: context [
 ]
 scanner2: make scanner []
 html2: make object! load mold body-of html
-text-file: either file? file: system/script/args [
+text-file: either file: system/script/args [
 	system/script/args: none
 	file: file
 	either "red" = find/last/tail file dot [
